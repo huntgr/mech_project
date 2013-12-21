@@ -28,7 +28,12 @@
 			display: inline;
 			position: absolute;
 		}
-		#bullets{
+		#left_bullets{
+			z-index:2;
+			display: inline;
+			position: absolute;
+		}
+		#right_bullets{
 			z-index:2;
 			display: inline;
 			position: absolute;
@@ -40,10 +45,11 @@
 		}
 	</style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 	<canvas id="canvas1"></canvas>
 	<canvas id="canvas2"></canvas>
-	<canvas id="bullets"></canvas>
+	<canvas id="left_bullets"></canvas>
+	<canvas id="right_bullets"></canvas>
 	<canvas id="map"></canvas>
 </body>
 </html>

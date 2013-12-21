@@ -9,7 +9,8 @@ function init(){
 	can1 = set_c("canvas1");
 	can2 = set_c("canvas2");
 	map_c = set_c("map");
-	bul_c = set_c("bullets");
+	bul_l = set_c("left_bullets");
+	bul_r = set_c("right_bullets");
 	mech1 = new Mech(1,"test_mech1");
 	mech1.build(test_mech1);
 	map = new File_obj();
@@ -19,7 +20,8 @@ function begin(){
 	can1 = set_c("canvas1");
 	can2 = set_c("canvas2");
 	map_c = set_c("map");
-	bul_c = set_c("bullets");
+	bul_l = set_c("left_bullets");
+	bul_r = set_c("right_bullets");
 	can1.clearRect(-100,-100,200,200);
 	can1.beginPath();
 	can2.clearRect(-100,-100,200,200);
@@ -31,7 +33,8 @@ function end(){
 	can1.stroke();
 	can2.stroke();
 	map_c.stroke();
-	bul_c.stroke();
+	bul_l.stroke();
+	bul_r.stroke();
 };
 function Mech(id,name){
 	this.angle = 1;
@@ -203,7 +206,7 @@ Mech.prototype.leg_dir = function(){
 	return [ret, nang];
 };
 Mech.prototype.move = function(map){
-	var vel,
+	var vel;
 	x_shift = 0;
 	y_shift = 0;
 	if(input.u){
@@ -224,8 +227,14 @@ Mech.prototype.move = function(map){
 	x_shift -= (vel * Math.cos(this.leg_angle));
 	map.data_obj.sx += x_shift;
 	map.data_obj.sy += y_shift;
+	console.log(x_shift,y_shift);
+	for(b in this.bullets){
+		var bb = this.bullets[b];
+		bb[2] += x_shift;
+		bb[5] += y_shift;
+	};
 };
-Mech.prototype.new_bullet = function(){
+Mech.prototype.new_bullet = function(arm){
 	var pi = Math.PI;
 	var x1 = Math.cos(this.angle+pi*.5);
 	var y1 = Math.sin(this.angle+pi*.5);
@@ -233,46 +242,44 @@ Mech.prototype.new_bullet = function(){
 	var y2 = Math.sin(-this.cotangent);
 	// console.log(x,y,dx,dy);
 	// this.bullets.push([x1,y1,x2,y2,0,40]);
-	this.bullets.push( [ Math.cos(this.angle) , Math.sin(this.angle) ,
-						 0 , 40,
-						 0 , 0 ,
-						 x1, y1,
-						 x2, y2  ]);
+	this.bullets.push( [ Math.cos(this.angle-pi*(Math.random()/15)), Math.sin(this.angle+pi*(Math.random()/15)), // index 0,1
+						 0 , 33, 90 , 0, 40,									 // index 2,3,4,5,6 
+						 arm ]);												 // index 7
 };
 Mech.prototype.cycle_bullets = function(){
 	for(b in this.bullets){
 		var bb = this.bullets[b];
-		bul_c.strokeStyle = "#FF8000"; 
-		bul_c.lineWidth = 3;
-
-		// bul_c.moveTo( (   bb[2] * bb[8] ) - ( 40 * bb[8] ) - 40 , ( bb[2] * bb[9] ) + ( 40 * bb[9] ) - 40 );
-		// bul_c.lineTo( ( ( bb[2] + bb[3] ) * bb[8] ) - ( 40 * bb[8] ) - 40 , ( ( bb[2] + bb[3] ) * bb[9] ) + ( 40 * bb[9] ) - 40 );
-	
-		// bul_c.moveTo( (bb[2]+(40*Math.cos(this.angle)/2) )      *bb[0] , (bb[2]+(40*Math.sin(this.angle)/2))      *bb[1] );
-		// bul_c.lineTo( (bb[2]+bb[3]+(40*Math.cos(this.angle)/2))*bb[0] , (bb[2]+bb[3]+(40*Math.sin(this.angle)/2))*bb[1] );
-	
-		// bul_c.moveTo( (bb[2]-(40*1))      *bb[0] , (bb[2]-(40*1))      *bb[1] );
-		// bul_c.lineTo( (bb[2]+bb[3]-(40*1))*bb[0] , (bb[2]+bb[3]-(40*1))*bb[1] );
-
-		// bul_c.moveTo( bb[4] * bb[0] -40       , bb[4] * bb[1] );
-		// bul_c.lineTo( (bb[4]*bb[1])+bb[2] -40 , (bb[4]*bb[1])+bb[3]);
-	
-		// bul_c.moveTo(bb[4]*bb[0],bb[4]*bb[1]);
-		// bul_c.lineTo((bb[4]+bb[5])*bb[2],(bb[4]+bb[5])*bb[3]);
-
-		// bul_c.moveTo(bb[4]+(bb[5]*bb[2]), bb[4]+(bb[5]*bb[3]) );
-		// bul_c.lineTo(bb[4]+(2*bb[5]*bb[2]), bb[4]+(2*bb[5]*bb[3]));
-
-		// bul_c.moveTo(bb[2]*bb[8] -40,bb[2]*bb[9] -40);
-		// bul_c.lineTo((bb[2]+bb[3])*bb[8] -40,(bb[2]+bb[3])*bb[9] -40);
-
 		
+		if(bb[7] === 'l'){
+<<<<<<< HEAD
+			bul_c.strokeStyle = "#FF8000"; 
+			bul_c.lineWidth = 1;
+			bul_c.moveTo( bb[2]       *bb[0] +bb[3] *bb[1],  bb[5]       *bb[1] +bb[3] * -bb[0]);
+			bul_c.lineTo((bb[2]+bb[6])*bb[0] +bb[3] *bb[1], (bb[5]+bb[6])*bb[1] +bb[3] * -bb[0]);
+		}else if( bb[7] === 'r'){
+			bul_c.strokeStyle = "#0080FF"; 
+			bul_c.lineWidth = 5;
+=======
+			bul_l.strokeStyle = "#FF8000"; 
+			bul_l.lineWidth = 3;
+			bul_l.moveTo( bb[2]       *bb[0] +bb[3] *bb[1],  bb[5]       *bb[1] +bb[3] * -bb[0]);
+			bul_l.lineTo((bb[2]+bb[6])*bb[0] +bb[3] *bb[1], (bb[5]+bb[6])*bb[1] +bb[3] * -bb[0]);
+			//bul_c.stroke();
+		}else if( bb[7] === 'r'){
+			bul_r.strokeStyle = "#0080FF"; 
+			bul_r.lineWidth = 1;
+>>>>>>> Fixed Bullet Colors
+			var xx1 = bb[2]*bb[0]-bb[3]*bb[1];
+			var yy1 = bb[5]*bb[1]-bb[3]* -bb[0];
+			bul_r.moveTo( xx1,yy1);
+			bul_r.arc(xx1,yy1,3,0,Math.PI*2)
+			//bul_c.stroke();
+			// bul_c.lineTo((bb[2]+bb[6])*bb[0] -bb[3] *bb[1], (bb[5]+bb[6])*bb[1] -bb[3] * -bb[0]);
+		};
+		// console.log(bb[2],bb[5]);
 
-
-
-
-
-		bb[2]+=bb[3];
+		bb[2]+=bb[4];
+		bb[5]+=bb[4];
 		// bb[4]-=bb[3];
 	};
 };
