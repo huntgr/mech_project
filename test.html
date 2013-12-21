@@ -1,0 +1,347 @@
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript">
+		var x = 3;
+		var y = 0;
+		var o = 0;
+		var mouse_x = 1;
+		var mouse_y = 1; 
+		var way = true;
+		function is_between(test,up,lw){ // checks if a number is within a given range
+			low = test>lw;
+			hi = test<up;
+			if(low&&hi){
+				return true;
+			}else{
+				return false;
+			};
+		};
+		function set_c(id){
+			var canvas = document.getElementById(id);
+			var can = canvas.getContext("2d");
+			can.canvas.height = 800;
+			can.canvas.width = 800;
+			can.translate(400,400);
+			can.beginPath();
+			return can;
+		};
+		function func(){
+			y++;
+			if(way){
+				x++;
+				o = Math.abs(x);
+			}else{
+				x--;
+				o = 6-x;
+			}
+			// x = (Math.abs(x%6));
+			x %= 6;
+			o %= 6;
+			if(y%20 == 0){
+				way = !way;
+			}
+			console.log(o);
+		};
+		function tanan(){
+			var x = Math.atan2(5,4);
+			var y = Math.tan(x);
+			var a = 1.5*57;
+			var b = 1.3*57;
+			var c = Math.tan(b-a);
+			var d = (1.5+1.3/(1+1.5*1.3));
+			console.log(d);
+			// console.log("x: ",x,"y: ",y);
+		};
+		var old = 1;
+		var i = 100;
+		var trig = 0;
+		var trog = 0;
+		var cnt = 0;
+		var laz = 0;
+		var num = -50;
+		var lognn = 0;
+		function lines(){
+			var pi = Math.PI;
+			var unit = (2*pi)/17;
+			var pies = [
+						-pi,
+						(unit-pi),
+						(unit*2-pi),
+						(unit*3-pi),
+						(unit*4-pi),
+						(unit*5-pi),
+						(unit*6-pi),
+						(unit*7-pi),
+						(unit*8-pi),
+						(unit*9-pi),
+						(unit*10-pi),
+						(unit*11-pi),
+						(unit*12-pi),
+						(unit*13-pi),
+						(unit*14-pi),
+						(unit*15-pi),
+						(unit*16-pi),
+						pi
+						];
+			// console.log(unit,pies);
+			// var quads = [
+			// 			[-3.13,  -2.15],
+			// 			[-2.15, -1.3],
+			// 			[-1.5,  -0.45],
+			// 			[-0.75,  0.4],
+			// 			[0.4,    1.25],
+			// 			[1.25,   2.1],
+			// 			[2.1,    3.14]
+			// 			];
+			// var sides = [
+			// 			[[1,2,3,4,5,6,7],[8,9,10,11,12,13,14,15,16]],
+			// 			[[2,3,4],[5,6,0]],
+			// 			[[3,4,5],[6,0,1]],
+			// 			[[4,5,6],[0,1,2]],
+			// 			[[5,6,0],[1,2,3]],
+			// 			[[6,0,1],[2,3,4]],
+			// 			[[0,1,2],[3,4,5]]
+			// 			]
+			// ,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+			var slices = [
+						[[1,2,3,4,5,6,7,8],[9,10,11,12,13,14,15,16]],
+						[[2,3,4,5,6,7,8,9],[10,11,12,13,14,15,16,0]],
+						[[3,4,5,6,7,8,9,10],[11,12,13,14,15,16,0,1]],
+						[[4,5,6,7,8,9,10,11],[12,13,14,15,16,0,1,2]],
+						[[5,6,7,8,9,10,11,12],[13,14,15,16,0,1,2,3]],
+						[[6,7,8,9,10,11,12,13],[14,15,16,0,1,2,3,4]],
+						[[7,8,9,10,11,12,13,14],[15,16,0,1,2,3,4,5]],
+						[[8,9,10,11,12,13,14,15],[16,0,1,2,3,4,5,6]],
+						[[9,10,11,12,13,14,15,16],[0,1,2,3,4,5,6,7]],
+						[[10,11,12,13,14,15,16,0],[1,2,3,4,5,6,7,8]],
+						[[11,12,13,14,15,16,0,1],[2,3,4,5,6,7,8,9]],
+						[[12,13,14,15,16,0,1,2],[3,4,5,6,7,8,9,10]],
+						[[13,14,15,16,0,1,2,3],[4,5,6,7,8,9,10,11]],
+						[[14,15,16,0,1,2,3,4],[5,6,7,8,9,10,11,12]],
+						[[15,16,0,1,2,3,4,5],[6,7,8,9,10,11,12,13]],
+						[[16,0,1,2,3,4,5,6],[7,8,9,10,11,12,13,14]],
+						[[0,1,2,3,4,5,6,7],[8,9,10,11,12,13,14,15]]
+						];
+			c1 = set_c("canvas1");
+			c2 = set_c("canvas2");
+			c3 = set_c("canvas3");
+			c3.lineWidth = 4;
+			c3.strokeStyle = "#FF8000";
+			var at = Math.atan2(mouse_y,mouse_x);
+			var qm = 0;
+			var qo = 0;
+			var ta = Math.abs(at);
+			for(var q=0;q<17;q++){
+				if(is_between(at,pies[q+1],pies[q])){
+					qm = q;
+
+				};
+				if(is_between(old,pies[q+1],pies[q])){
+					qo = q;
+				};
+			};
+			var sedis = slices[qm];
+			// console.log("o: ",old,"at: ",at);
+			console.log(qm);
+			console.log(sedis[0]);
+			if(qo != qm){
+				for(var t=0;t<8;t++){
+					if(qo == sedis[0][t]){
+						old-=0.05;
+					}else if(qo == sedis[1][t]){
+						old+=0.05;
+					};
+				};
+			}else if(!is_between(old,at+unit,at-unit)){
+				if(at > old){
+					old+=0.05;
+				}else{
+					old-=0.05;
+				}
+			}else if(!is_between(old,at+.05,at-.05)){
+				if(at > old){
+					old+=0.02;
+				}else{
+					old-=0.02;
+				}
+			}else if(!is_between(old,at+.01,at-.01)){
+				if(at > old){
+					old+=0.005;
+				}else{
+					old-=0.005;
+				}
+			};
+			c1.rotate(at);
+			c2.rotate(old);
+
+			c1.moveTo(0,0);
+			c1.lineTo(200,0);
+
+			if(trig){
+				trog = 1;
+				laz = old;
+			};
+			if(trog){
+				if(cnt == 400){
+					trog = 0;
+					cnt = 0;
+				};
+				cnt+=10;
+				var cvb = Math.sin(laz);
+				var xcv = Math.cos(laz);
+				c3.moveTo( cnt*xcv +50*xcv ,  cnt*cvb +50*cvb);
+				c3.lineTo( (10+cnt)*xcv    ,  (10+cnt)*cvb   );
+
+			};
+			var sin = Math.sin(at);
+			var cos = Math.cos(at);
+			var sino = Math.sin(at+pi*.5);
+			var coso = Math.cos(at+pi*.5);
+			var sino1 = Math.sin(at+pi*.75);
+			var coso1 = Math.cos(at+pi*.75);
+			var tan = Math.tan(at);
+			// num--;
+			// c3.moveTo(140*Math.cos(at+pi*.5)+num                  , 200*Math.sin(at+pi*.5)+num);
+			// c3.lineTo(212*Math.cos(at+pi*.5)+110*Math.cos(at)+num , 200*Math.sin(at+pi*.5)+110*Math.sin(at)+num);
+
+			// c3.moveTo(100*Math.cos(at)       , 100*Math.sin(at));
+			// c3.lineTo(150*Math.cos(at+pi*.5) , 100*Math.sin(at+pi*.5));
+
+			// c3.moveTo(100*cos+50,100*sin+50);
+			// c3.lineTo(150*cos+50,150*sin+50);
+
+			c3.moveTo(110*cos+30,110*sin+10);
+			c3.lineTo(160*cos+30,160*sin+10);
+			// c3.lineTo(150*coso,100*tan);
+
+			c2.moveTo(10,10);
+			c2.lineTo(210,10);
+
+
+			c1.stroke();
+			c2.stroke();
+			c3.stroke();
+			if(old >= pi){ // || old < -pi){
+				old = -pi;
+			};
+			if(old < -pi){
+				old = pi;
+			};
+		};
+		function orbit(){
+			c1 = set_c("canvas1");
+			c2 = set_c("canvas2");
+			c3 = set_c("canvas3");
+			var pi = Math.PI;
+			var ta = Math.atan(mouse_x/mouse_y);
+			var at = Math.atan2(mouse_y,mouse_x);
+			var sin = Math.sin(at);
+			var cos = Math.cos(at);
+			var tan = Math.tan(mouse_y/mouse_x);
+
+			c1.moveTo(0,0);
+			c1.lineTo(100*cos,100*sin);
+
+			c2.moveTo(50,0);
+			c2.arc(0,0,50,0,2*pi);
+
+
+			var coef1 = 100;
+			var coef_x2 = 50;
+
+			var coef_y1 = 60;
+			var coef_y2 = 50;
+
+			var coef3   = 160;
+
+			var pi_r_1  =  pi*.5;
+			var pi_r_2  = -pi*((coef1/10)/coef1);//.1;
+
+			var cos_1   = Math.cos(at+pi_r_1);
+			var sin_1   = Math.sin(at+pi_r_1);
+
+			var cos_2   = Math.cos(at+pi_r_2);
+			var sin_2   = Math.sin(at+pi_r_2);
+
+			c3.moveTo( coef1 * cos_1 + coef3 * cos_2 , coef1 * sin_1 + coef3 * sin_2 );
+			c3.lineTo( coef_x2 * cos_1 , coef_y2 * sin_1);
+
+
+			// c3.moveTo(60*Math.cos(at+pi*.5)+40*Math.cos(at-pi*.10),60*Math.sin(at+pi*.5)+40*Math.sin(at-pi*.10));
+			// c3.lineTo(50*Math.cos(at+pi*.5),50*Math.sin(at+pi*.5));
+			// c3.arc(50*Math.cos(at+pi*.5),50*Math.sin(at+pi*.5),10,pi,2*pi)
+
+
+			// c3.moveTo(50+50*cos,50+50*sin);
+			// c3.lineTo(50-150*cos,50-100*sin);
+			// c3.moveTo(50,0);
+			// c3.lineTo(100*tan,100*tan);
+			// c3.moveTo(0,0);
+
+			// c3.moveTo((75+lognn)*Math.cos(at+pi*.25),(75+lognn)*Math.sin(at+pi*.25));
+
+			// c3.moveTo(0,0);
+
+			// c3.lineTo((75-lognn)*Math.cos(at+pi*.75),(75-lognn)*Math.sin(at+pi*.75));
+
+			// c3.lineTo(75*Math.cos(at+pi*.25),75*Math.sin(at+pi*.25));
+
+			// c3.moveTo((75+lognn)*Math.cos(-ta+pi*.25),(75+lognn)*Math.sin(-ta+pi*.25));
+
+			// c3.moveTo(0,0);
+
+			// c3.lineTo((75-lognn)*Math.cos(-ta+pi*.75),(75-lognn)*Math.sin(-ta+pi*.75));
+
+			// c3.moveTo( (100+(40*Math.cos(at)/2) )      *Math.cos(at) , (100+(40*Math.sin(at)/2))      *Math.sin(at) );
+			// c3.lineTo( (120+(40*Math.cos(at)/2))*Math.cos(at) , (120+(40*Math.sin(at)/2))*Math.sin(at) );
+	
+			// c3.moveTo( 100*Math.cos(tan), 100*Math.sin(tan));
+			// c3.lineTo( 120*Math.cos(tan), 120*Math.sin(tan) );
+
+			// c3.moveTo(0 ,0 );
+			// c3.lineTo(100*Math.cos(at+pi*.5) , 100*Math.sin(at+pi*.5) );
+
+			// c3.moveTo(100*Math.cos(at+pi*.5) , 100*Math.sin(at+pi*.5));
+			// c3.lineTo(50+150*Math.cos(at+pi*.75) , 50+100*Math.sin(at+pi*1.75) );
+
+			c1.stroke();
+			c2.stroke();
+			c3.stroke();
+		};
+		window.onmousemove = function(){
+			mouse_x = event.pageX-400;
+			mouse_y = event.pageY-400;
+		};
+		window.onkeydown = function(){
+			trig = 1;
+			lognn += 100;
+		};
+		window.onkeyup = function(){
+			trig = 0;
+		};	
+		window.onload = function(){
+			var pie = Math.PI;
+			console.log(Math.round(Math.sin(pie/2)),Math.round(Math.sin(3*pie/2)),Math.round(Math.cos(0)),Math.round(Math.cos(pie)));
+			// console.log((Math.PI*2));
+			// for(var i=0;i<7;i++){
+			// 	console.log(-3 + 0.85*i);
+			// };
+
+			// tanan();
+			setInterval(orbit,50);
+		};
+	</script>
+	<style type="text/css">
+	canvas {
+		display: inline;
+		position: absolute;
+	}
+	</style>
+</head>
+<body>
+<canvas id="canvas1"></canvas>
+<canvas id="canvas2"></canvas>
+<canvas id="canvas3"></canvas>
+</body>
+</html>

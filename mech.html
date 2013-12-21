@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title></title>
+	<!--<script type="text/javascript" src="gf.js"></script>-->
+	<script type="text/javascript" src="canveng.js"></script>
+	<script type="text/javascript" src="controls.js"></script>
+	<script type="text/javascript" src="mech.js"></script>
+
+	<script type="text/javascript">
+		
+		window.onload = function(){
+			init();
+			setInterval(set, 50);
+		};
+	</script>
+	<style type="text/css">
+		body{
+
+		}
+		#canvas1{
+			/*cursor: none;*/
+			z-index:3;
+			display: inline;
+			position: absolute;
+		}
+		#canvas2{
+			z-index:2;
+			display: inline;
+			position: absolute;
+		}
+		#bullets{
+			z-index:2;
+			display: inline;
+			position: absolute;
+		}
+		#map{
+			z-index:1;
+			display: inline;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas1"></canvas>
+	<canvas id="canvas2"></canvas>
+	<canvas id="bullets"></canvas>
+	<canvas id="map"></canvas>
+</body>
+</html>
